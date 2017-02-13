@@ -1,30 +1,7 @@
-# plus-minus
+# Plus-minus
 
-> A Vue.js project
+A little Vue.js project/experiment.
 
-## Build Setup
+Outsource ‘remembering the number’... so my girlfriend can focus on what matters most. That is recreating Star Wars crochet figures. Ironic, because the design is based on interfaces of Star Trek.
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
-```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Even after you refreshed the page, the number will still be there. Other features include negative numbers, resetting to zero by holding the minus button and it kinda acts like a (web) app: open [the website](https://mellewynia.github.io/plus-minus/) and ‘pin to homescreen’ (iOS).
