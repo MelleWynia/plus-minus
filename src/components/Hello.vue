@@ -1,9 +1,18 @@
 <template>
   <div class="hello">
-    <h1>{{ count }}</h1>
-    <button class="button-plus" v-on:mousedown="plus">PLUS</button>
+    <h1
+      v-bind:class="{ '___is-minus': count < 0 }"
+    >
+      {{ count }}
+    </h1>
+    <button
+      class="button-plus"
+      v-on:mousedown="plus"
+      v-on:touchstart="plus"
+    >PLUS</button>
     <button class="button-minus"
       v-on:mousedown="minus"
+      v-on:touchstart="minus"
       v-on:mouseup="minusMouseup"
       v-on:touchend="minusMouseup"
     >MINUS</button>
@@ -11,6 +20,9 @@
 </template>
 
 <script>
+
+document.title = localStorage.count || 0
+
 export default {
   name: 'hello',
   data () {
@@ -21,13 +33,16 @@ export default {
     }
   },
   methods: {
-    plus: function () {
+    plus: function (event) {
       this.count++
       localStorage.count = this.count
       this.total++
       localStorage.total = this.total
+
+      event.preventDefault()
     },
-    minus: function () {
+    minus: function (event) {
+      event.preventDefault()
       this.count--
       localStorage.count = this.count
 
@@ -36,10 +51,7 @@ export default {
         localStorage.count = 0
       }, 1000)
     },
-    minusMouseup: function () {
-      clearTimeout(this.timer)
-    },
-    minusTouchup: function (event) {
+    minusMouseup: function (event) {
       clearTimeout(this.timer)
       event.preventDefault()
     }
@@ -55,6 +67,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
 
+.not-selectable
+  -webkit-touch-callout none
+  -webkit-user-select none
+  -khtml-user-select none
+  -moz-user-select none
+  -ms-user-select none
+  user-select none
+  -webkit-tap-highlight-color rgba(0,0,0,0)
+
 .hello
   margin 0 auto
   max-width 320px
@@ -62,41 +83,59 @@ export default {
   font-family Oswald, sans-serif
 
 h1
-  margin 10vh 0 16px 0
-  padding 0
+  margin 0
+  padding 4vh 0 0 0
   font-size 84px
+  text-shadow 0 0 10px rgba(#9bd9fc, 0.26)
+  transition color 380ms
+
+  @media (min-height: 530px)
+    padding-top 11vh
+
+  &.___is-minus
+    color #c59a1e
+    text-shadow 0 0 10px rgba(#c59a1e, 0.26)
+    text-indent: -29px;
 
 .button-plus
   display block
   padding 189px 9px 8px 0
   border 0
-  background #9bd9fc
+  box-shadow 0 0 26px rgba(#9bd9fc, 0.38)
+  background #8bd5ff
   font-size 26px
   width 100%
   text-align right
   letter-spacing 0.05rem
   font-weight 900
-  transition 62ms
+  transition 380ms
+  text-shadow 0 0 10px rgba(#000, 0.1)
+
+  @extends .not-selectable
 
   &:active
-    background lighten(#9bd9fc, 30%)
+    background lighten(#8bd5ff, 50%)
     transition none
 
   &:focus
     outline 0
 
 .button-minus
-  margin 26px
+  margin 16px
   padding 26px 7px 6px 100px
   border 0
-  background lighten(#a69a47, 10%)
-  font-weight bold
+  box-shadow 0 0 10px rgba(#c59a1e, 0.62)
+  background #c59a1e
+  font-weight 900
   font-size 14px
-  transition 62ms
+  transition 380ms
   color #000
+  text-shadow 0 0 10px rgba(#000, 0.1)
+
+  @extends .not-selectable
 
   &:active
-    background lighten(#a69a47, 30%)
+    background lighten(#c59a1e, 40%)
     transition none
 
   &:focus
